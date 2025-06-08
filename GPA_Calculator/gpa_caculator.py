@@ -19,11 +19,6 @@ def normalize_subject_code(code):
     return re.sub(r"\s+", "", str(code)).strip().upper()
 
 
-
-def normalize_subject_code(code):
-    return re.sub(r"\s+", "", str(code)).strip().upper()
-
-
 def get_semester(subject_code):
     subject_code = normalize_subject_code(subject_code)
     match = re.search(r'SCS(\d{4})', subject_code)
@@ -51,14 +46,34 @@ def sanitize_results(df):
     df["Subject"] = df["Subject"].apply(normalize_subject_code)
     df["GradePoint"] = df["Result"].map(grade_points)
 
-    # For GPA calc: exclude these results (MC, CM, etc.)
-    df_gpa = df[~df["Result"].isin(exclude_results)].copy()
-    # Remove duplicates keeping highest GradePoint
-    df_gpa = df_gpa.sort_values(by=["Subject", "GradePoint"], ascending=[True, False])
-    df_gpa = df_gpa.drop_duplicates(subset="Subject", keep="first")
-    df_gpa["CappedGradePoint"] = df_gpa["GradePoint"]
+    # Exclude for GPA (but keep for MC counting)
+    df_valid = df[~df["Result"].isin(exclude_results)].copy()
 
-    return df, df_gpa
+    # Mark subjects with multiple attempts
+    repeat_flags = df_valid["Subject"].duplicated(keep=False)
+    df_valid["IsRepeat"] = repeat_flags
+
+    # Sort so best grade comes first
+    df_valid = df_valid.sort_values(by=["Subject", "GradePoint"], ascending=[True, False])
+
+    # Deduplicate by subject — keep best grade
+    df_gpa = df_valid.drop_duplicates(subset="Subject", keep="first").copy()
+
+    # Cap grade point at C+ (2.3) if it's a repeat AND better than C+
+    df_gpa["CappedGradePoint"] = df_gpa.apply(
+        lambda row: min(row["GradePoint"], 2.3) if row["IsRepeat"] and row["GradePoint"] > 2.3 else row["GradePoint"],
+        axis=1
+    )
+
+    # Assign semester after deduplication
+    df_gpa["Semester"] = df_gpa["Subject"].apply(get_semester)
+
+    # Full list with all results (for MC/CM handling)
+    df_all = df.copy()
+    df_all["Semester"] = df_all["Subject"].apply(get_semester)
+
+    return df_all, df_gpa
+
 
 def calculate_gpa(df, use_capped=True):
     if df.empty:
