@@ -129,6 +129,8 @@ for filename in os.listdir(folder):
 # === Export to Excel ===
 summary_df = pd.DataFrame(all_students)
 summary_df = summary_df.sort_values(by="FinalGPA", ascending=False)
+summary_df["Rank"] = summary_df["FinalGPA"].rank(method="min", ascending=False).astype(int)
+summary_df = summary_df.sort_values(by="Rank")  # Optional: sort by rank instead of GPA
 
 output_path = "data/summary/GPA_Summary.xlsx"
 os.makedirs(os.path.dirname(output_path), exist_ok=True)
