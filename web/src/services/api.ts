@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 // Configure your FastAPI backend URL here
-const API_BASE_URL = 'http://localhost:8000'; // Update this to your backend URL
+const API_BASE_URL = 'http://localhost:8000/api'; // Update this to your backend URL
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -21,24 +21,24 @@ api.interceptors.response.use(
 export const studentApi = {
   // Student Lookup
   getStudentResults: (indexNumber: string) => 
-    api.get(`/${indexNumber}`),
+    api.get(`/students/${indexNumber}`),
   
   downloadStudentExcel: (indexNumber: string) => 
-    api.get(`/${indexNumber}/download`, { responseType: 'blob' }),
+    api.get(`/students/${indexNumber}/download`, { responseType: 'blob' }),
   
   getSubjectResult: (indexNumber: string, subjectCode: string) => 
-    api.get(`/${indexNumber}/subject/${subjectCode}`),
+    api.get(`/students/${indexNumber}/subject/${subjectCode}`),
   
   // GPA Summary
   getAllGPASummary: () => 
-    api.get('/students/gpa-summary'),
+    api.get('/summary/students/gpa-summary'),
   
   getGPASummaryByIndex: (indexNumber: string) => 
-    api.get(`/students/gpa-summary/${indexNumber}`),
+    api.get(`/summary/students/gpa-summary/${indexNumber}`),
   
   // Medical Credits
   getAllMedicalCredits: (strategicOnly?: boolean) => 
-    api.get('/students/medical-credits', { 
+    api.get('/summary/students/medical-credits', { 
       params: strategicOnly ? { strategic_only: true } : undefined 
     }),
   
@@ -54,7 +54,7 @@ export const studentApi = {
   
   // Subject Difficulty
   getAllDifficultySummary: () => 
-    api.get('/subjects/difficulty-summary'),
+    api.get('/summary/subjects/difficulty-summary'),
   
   getDifficultySummaryBySubject: (subjectCode: string) => 
     api.get(`/subjects/difficulty-summary/${subjectCode}`),
