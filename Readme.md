@@ -1,3 +1,5 @@
+### UCSC Exam results analyser:
+
 ````markdown
 ## 🛠️ Setup and Run Instructions
 
@@ -23,7 +25,7 @@ python .\analyse_subjects\analyse_subjects.py
 
 ---
 
-### 🌐 Frontend Setup (Inside `web` Directory)
+### Frontend Setup (Inside `web` Directory)
 
 ```bash
 # Navigate to frontend project
@@ -34,7 +36,4 @@ npm install
 
 # Start the development server
 npm run dev
-```
-
-```
 ```
