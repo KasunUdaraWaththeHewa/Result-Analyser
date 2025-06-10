@@ -21,6 +21,9 @@ python .\GPA_Calculator\sort_by_medicals.py
 
 # Run subject analysis
 python .\analyse_subjects\analyse_subjects.py
+
+# Run the python server to expose rest apis.
+python run.py
 ````
 
 ---
