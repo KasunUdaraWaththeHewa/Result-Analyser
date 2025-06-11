@@ -36,6 +36,7 @@ def download_student_results(index_number: str):
     )
 
 
+# No need since the table
 @router.get("/{index_number}/subject/{subject_code}")
 def get_student_subject_result(index_number: str, subject_code: str):
     """
