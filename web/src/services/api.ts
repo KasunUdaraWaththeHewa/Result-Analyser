@@ -22,9 +22,21 @@ export const studentApi = {
   // Student Lookup
   getStudentResults: (indexNumber: string) => 
     api.get(`/students/${indexNumber}`),
+
+  getStudentFullData: async (indexNumber: string) => {
+    const [resultsRes, gpaRes] = await Promise.all([
+      api.get(`/students/${indexNumber}`),
+      api.get(`/summary/students/gpa-summary/${indexNumber}`),
+    ]);
+    return {
+      results: resultsRes.data,
+      gpaSummary: gpaRes.data
+    };
+  },
   
   downloadStudentExcel: (indexNumber: string) => 
     api.get(`/students/${indexNumber}/download`, { responseType: 'blob' }),
+
   
   getSubjectResult: (indexNumber: string, subjectCode: string) => 
     api.get(`/students/${indexNumber}/subject/${subjectCode}`),
