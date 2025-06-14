@@ -14,6 +14,17 @@ import { Search, Download, BookOpen } from "lucide-react";
 import { studentApi } from "../services/api";
 import { useToast } from "@/hooks/use-toast";
 
+import {
+  ResponsiveContainer,
+  LineChart,
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid,
+  Legend,
+  Line,
+} from "recharts";
+
 interface SubjectResult {
   Subject: string;
   Year: number;
@@ -188,76 +199,37 @@ export const StudentLookup = () => {
             <CardTitle>
               Student Results - {studentResult.index_number}
             </CardTitle>
-            <CardDescription>
-              Index: {studentResult.index_number}
+             <CardDescription>
+              Final GPA: {studentResult.gpaSummary.FinalGPA}
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="grid gap-4 md:grid-cols-3 mb-6">
-              <div>
-                <h3 className="font-semibold text-sm text-muted-foreground">
-                  Year 1 Sem 1 GPA
-                </h3>
-                <p className="text-lg font-medium">
-                  {studentResult.gpaSummary.Y1S1.toFixed(2)}
-                </p>
-              </div>
-              <div>
-                <h3 className="font-semibold text-sm text-muted-foreground">
-                  Year 1 Sem 2 GPA
-                </h3>
-                <p className="text-lg font-medium">
-                  {studentResult.gpaSummary.Y1S2.toFixed(2)}
-                </p>
-              </div>
-              <div>
-                <h3 className="font-semibold text-sm text-muted-foreground">
-                  Year 2 Sem 1 GPA
-                </h3>
-                <p className="text-lg font-medium">
-                  {studentResult.gpaSummary.Y2S1.toFixed(2)}
-                </p>
-              </div>
-              <div>
-                <h3 className="font-semibold text-sm text-muted-foreground">
-                  Year 2 Sem 2 GPA
-                </h3>
-                <p className="text-lg font-medium">
-                  {studentResult.gpaSummary.Y2S2.toFixed(2)}
-                </p>
-              </div>
-              <div>
-                <h3 className="font-semibold text-sm text-muted-foreground">
-                  Year 3 Sem 1 GPA
-                </h3>
-                <p className="text-lg font-medium">
-                  {studentResult.gpaSummary.Y3S1.toFixed(2)}
-                </p>
-              </div>
-              <div>
-                <h3 className="font-semibold text-sm text-muted-foreground">
-                  Final GPA
-                </h3>
-                <p className="text-lg font-bold text-foreground">
-                  {studentResult.gpaSummary.FinalGPA.toFixed(2)}
-                </p>
-              </div>
-              <div>
-                <h3 className="font-semibold text-sm text-muted-foreground">
-                  Medicals Taken
-                </h3>
-                <p className="text-lg font-medium">
-                  {studentResult.gpaSummary.TotalMC}
-                </p>
-              </div>
-              <div>
-                <h3 className="font-semibold text-sm text-muted-foreground">
-                  Rank
-                </h3>
-                <p className="text-lg font-medium">
-                  {studentResult.gpaSummary.Rank}
-                </p>
-              </div>
+            <div className="w-full h-96">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart
+                  data={[
+                    { name: "Y1S1", GPA: studentResult.gpaSummary.Y1S1 },
+                    { name: "Y1S2", GPA: studentResult.gpaSummary.Y1S2 },
+                    { name: "Y2S1", GPA: studentResult.gpaSummary.Y2S1 },
+                    { name: "Y2S2", GPA: studentResult.gpaSummary.Y2S2 },
+                    { name: "Y3S1", GPA: studentResult.gpaSummary.Y3S1 },
+                  ]}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis domain={[0, 4]} />
+                  <Tooltip />
+                  <Legend />
+                  <Line
+                    type="monotone"
+                    dataKey="GPA"
+                    stroke="#000000"
+                    strokeWidth={3}
+                    activeDot={{ r: 6 }}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
             </div>
 
             <Separator className="my-4" />
