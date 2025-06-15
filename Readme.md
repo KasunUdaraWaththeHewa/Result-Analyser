@@ -1,9 +1,9 @@
----
 
-```markdown
 # 🎓 Exam Results Analyzer
 
 An application to analyze and visualize exam results. Built with **FastAPI** for the backend and **React (Vite + Tailwind)** for the frontend.
+
+---
 
 ## 🛠️ Setup and Run Instructions
 
@@ -11,28 +11,54 @@ An application to analyze and visualize exam results. Built with **FastAPI** for
 
 Make sure Python 3.9+ is installed. Then run:
 
+#### ▶️ Activate virtual environment
+
+**Windows**
 ```bash
-# Activate virtual environment
-venv\Scripts\activate     # On Windows
-# OR
-source venv/bin/activate  # On Unix/Linux/Mac
-
-# Install Python dependencies
-pip install -r requirements.txt 
-
-# Run FastAPI application
-python main.py
-
-# Run GPA processing scripts
-python ./GPA_Calculator/gpa_caculator.py 
-python ./GPA_Calculator/sort_by_medicals.py 
-
-# Run subject analysis script
-python ./analyse_subjects/analyse_subjects.py
-
-# Run the REST API server
-python run.py
+venv\Scripts\activate
 ````
+
+**Unix/Linux/Mac**
+
+```bash
+source venv/bin/activate
+```
+
+#### 📦 Install Python dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+#### 🚀 Run FastAPI application
+
+```bash
+python main.py
+```
+
+#### 🧮 Run GPA Calculator
+
+```bash
+python ./GPA_Calculator/gpa_caculator.py
+```
+
+#### 🩺 Sort by medicals
+
+```bash
+python ./GPA_Calculator/sort_by_medicals.py
+```
+
+#### 📊 Analyze subjects
+
+```bash
+python ./analyse_subjects/analyse_subjects.py
+```
+
+#### 🌐 Run REST API server
+
+```bash
+python run.py
+```
 
 ---
 
@@ -40,18 +66,25 @@ python run.py
 
 Make sure Node.js (v16+) is installed.
 
+#### 📁 Navigate to frontend
+
 ```bash
-# Navigate to frontend project
 cd web
+```
 
-# Install JavaScript dependencies
+#### 📦 Install frontend dependencies
+
+```bash
 npm install
+```
 
-# Start the development server
+#### 🚀 Start frontend dev server
+
+```bash
 npm run dev
 ```
 
-> Access the app at `http://localhost:8080`
+> Access the app at: `http://localhost:8080`
 
 ---
 
@@ -63,9 +96,9 @@ npm run dev
 * Analyze strategic use of medical credits
 * Sort and filter student performance data
 * Full subject-wise results breakdown
-* Visualize GPA summeries
-* Visualize subject wise summeries
-* Visualize subject wise difficulties and results taken.
+* Visualize GPA summaries
+* Visualize subject-wise summaries
+* Visualize subject difficulties and trends
 
 ---
 
@@ -86,23 +119,23 @@ npm run dev
 
 ## 🧪 Development Notes
 
-* Ensure the backend is running before interacting with the frontend.
-* Scraping scripts and processing excel sheets must be run manually in order when data changes.
-* CORS is enabled for local development.
+* Ensure the backend is running before using the frontend
+* Run data scripts manually when Excel files or data change
+* CORS is enabled for local development
 
 ---
 
 ## 🤝 Contributing
-If you want to contribute, feel free to fork the repository and submit a pull request. Contributions are welcome!
-Recognized improvements are always appreciated, and issues and features can be discussed in the GitHub repository.
+
+Contributions are welcome!
+Feel free to fork the repository, submit a pull request, or open issues for discussion.
+
+---
 
 ## 📜 License
 
 MIT License — feel free to use and modify.
 
 ```
-
----
-
-Let me know if you want this saved as a file, or you'd like to include things like screenshots, contribution guidelines, or deployment instructions.
+✅ Let me know if you'd like this saved as a `README.md` file or want to add screenshots, badges, or deployment instructions.
 ```
