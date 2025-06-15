@@ -55,6 +55,9 @@ export const StudentLookup = () => {
   );
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
+  const [filterYear, setFilterYear] = useState<string>("All");
+  const [filterSemester, setFilterSemester] = useState<string>("All");
+  const [filterResult, setFilterResult] = useState<string>("All");
 
   const handleStudentSearch = async () => {
     if (!indexNumber.trim()) {
@@ -199,7 +202,7 @@ export const StudentLookup = () => {
             <CardTitle>
               Student Results - {studentResult.index_number}
             </CardTitle>
-             <CardDescription>
+            <CardDescription>
               Final GPA: {studentResult.gpaSummary.FinalGPA}
             </CardDescription>
           </CardHeader>
@@ -236,6 +239,80 @@ export const StudentLookup = () => {
 
             <div className="space-y-3">
               <h3 className="font-semibold">Subjects</h3>
+              <div className="flex flex-wrap gap-4 mb-4">
+                <div>
+                  <label className="text-sm block mb-1">Academic Year</label>
+                  <select
+                    value={filterYear}
+                    onChange={(e) => setFilterYear(e.target.value)}
+                    className="border px-2 py-1 rounded w-[200px]"  
+                  >
+                    <option value="All">All</option>
+                    {[19, 20, 21].map((year) => (
+                      <option key={year} value={year}>
+                        {year}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="text-sm block mb-1">Semester</label>
+                  <select
+                    value={filterSemester}
+                    onChange={(e) => setFilterSemester(e.target.value)}
+                    className="border px-2 py-1 rounded w-[200px]"
+                  >
+                    <option value="All">All</option>
+                    {["1", "2"].map((sem) => (
+                      <option key={sem} value={sem}>
+                        {sem}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="text-sm block mb-1">Grade</label>
+                  <select
+                    value={filterResult}
+                    onChange={(e) => setFilterResult(e.target.value)}
+                    className="border px-2 py-1 rounded w-[200px]"
+                  >
+                    <option value="All">All</option>
+                    {[
+                      "A+",
+                      "A",
+                      "A-",
+                      "B+",
+                      "B",
+                      "B-",
+                      "C+",
+                      "C",
+                      "C-",
+                      "D+",
+                      "D",
+                      "E",
+                      "F",
+                    ].map((grade) => (
+                      <option key={grade} value={grade}>
+                        {grade}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              <Button
+                variant="ghost"
+                className="text-xs"
+                onClick={() => {
+                  setFilterYear("All");
+                  setFilterSemester("All");
+                  setFilterResult("All");
+                }}
+              >
+                Reset Filters
+              </Button>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
@@ -248,33 +325,44 @@ export const StudentLookup = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {studentResult.results.map((subject, idx) => (
-                      <tr key={idx} className="border-b">
-                        <td className="p-2">{subject.Subject}</td>
-                        <td className="p-2">
-                          <Badge
-                            className={getGradeColor(subject.Year.toString())}
-                          >
-                            {subject.Year}
-                          </Badge>
-                        </td>
-                        <td className="p-2">{subject.Semester}</td>
-                        <td className="p-2">
-                          <Badge
-                            className={getGradeColor(
-                              subject.Credits.toString()
-                            )}
-                          >
-                            {subject.Credits}
-                          </Badge>
-                        </td>
-                        <td className="p-2">
-                          <Badge className={getGradeColor(subject.Result)}>
-                            {subject.Result}
-                          </Badge>
-                        </td>
-                      </tr>
-                    ))}
+                    {studentResult.results
+                      .filter((subject) => {
+                        return (
+                          (filterYear === "All" ||
+                            subject.Year.toString() === filterYear) &&
+                          (filterSemester === "All" ||
+                            subject.Semester === filterSemester) &&
+                          (filterResult === "All" ||
+                            subject.Result === filterResult)
+                        );
+                      })
+                      .map((subject, idx) => (
+                        <tr key={idx} className="border-b">
+                          <td className="p-2">{subject.Subject}</td>
+                          <td className="p-2">
+                            <Badge
+                              className={getGradeColor(subject.Year.toString())}
+                            >
+                              {subject.Year}
+                            </Badge>
+                          </td>
+                          <td className="p-2">{subject.Semester}</td>
+                          <td className="p-2">
+                            <Badge
+                              className={getGradeColor(
+                                subject.Credits.toString()
+                              )}
+                            >
+                              {subject.Credits}
+                            </Badge>
+                          </td>
+                          <td className="p-2">
+                            <Badge className={getGradeColor(subject.Result)}>
+                              {subject.Result}
+                            </Badge>
+                          </td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               </div>
