@@ -174,7 +174,7 @@ export const StudentLookup = () => {
           <CardContent className="space-y-4">
             <div className="flex gap-2">
               <Input
-                placeholder="Enter index number (e.g., 190001A)"
+                placeholder="Enter index number (e.g., 21001987)"
                 value={indexNumber}
                 onChange={(e) => setIndexNumber(e.target.value)}
                 onKeyPress={(e) => e.key === "Enter" && handleStudentSearch()}
@@ -245,7 +245,7 @@ export const StudentLookup = () => {
                   <select
                     value={filterYear}
                     onChange={(e) => setFilterYear(e.target.value)}
-                    className="border px-2 py-1 rounded w-[200px]"  
+                    className="border px-2 py-1 rounded w-[200px]"
                   >
                     <option value="All">All</option>
                     {[19, 20, 21].map((year) => (
@@ -301,18 +301,19 @@ export const StudentLookup = () => {
                     ))}
                   </select>
                 </div>
+                <Button
+                  variant="outline"
+                  className="mt-5"
+                  onClick={() => {
+                    setFilterYear("All");
+                    setFilterSemester("All");
+                    setFilterResult("All");
+                  }}
+                >
+                  Reset
+                </Button>
               </div>
-              <Button
-                variant="ghost"
-                className="text-xs"
-                onClick={() => {
-                  setFilterYear("All");
-                  setFilterSemester("All");
-                  setFilterResult("All");
-                }}
-              >
-                Reset Filters
-              </Button>
+
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>

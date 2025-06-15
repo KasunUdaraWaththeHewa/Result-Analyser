@@ -38,16 +38,10 @@ const menuItems = [
   },
   {
     id: 'subjects' as ActiveSection,
-    label: 'Subjects',
+    label: 'Subjects & Difficulty',
     icon: BookOpen,
     description: 'Subject information'
   },
-  {
-    id: 'subject-difficulty' as ActiveSection,
-    label: 'Subject Difficulty',
-    icon: TrendingUp,
-    description: 'Difficulty analysis'
-  }
 ];
 
 export const Sidebar = ({ activeSection, onSectionChange }: SidebarProps) => {
@@ -102,7 +96,6 @@ export const Sidebar = ({ activeSection, onSectionChange }: SidebarProps) => {
                 }}
                 className={cn(
                   "w-full text-left p-3 rounded-lg transition-colors duration-200",
-                  "hover:bg-accent hover:text-accent-foreground",
                   isActive
                     ? "bg-primary text-primary-foreground"
                     : "text-foreground"
