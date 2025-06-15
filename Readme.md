@@ -135,7 +135,3 @@ Feel free to fork the repository, submit a pull request, or open issues for disc
 ## 📜 License
 
 MIT License — feel free to use and modify.
-
-```
-✅ Let me know if you'd like this saved as a `README.md` file or want to add screenshots, badges, or deployment instructions.
-```
